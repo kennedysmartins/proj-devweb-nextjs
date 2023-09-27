@@ -24,11 +24,18 @@ const LoginPage = () => {
         <Appbar onMenuToggle={handleMenuToggle}></Appbar>
         <Drawer isOpen={isDrawerOpen} onClose={handleMenuToggle}></Drawer>
         
-            <h2>
+        <h2>
               {" "}
-              Signed in as {session.user.email} <br />
+              Logado como: {session.user.name}, e-mail: {session.user.email} <br />
             </h2>
 
+            <img
+              src={session.user.image}
+              width={500}
+              height={500}
+              alt="Picture of the author"
+            />
+            
               <button
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'
                 onClick={() => router.push("/Profile")}
