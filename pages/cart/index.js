@@ -2,25 +2,15 @@
 import Appbar from "@/app/components/Appbar"
 import Bottom from "@/app/components/Bottom"
 import Drawer from "@/app/components/Drawer"
+import { CartContext } from "@/app/contexts/CartContext"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/router"
 import React, { useContext, useEffect, useState } from "react"
 import "tailwindcss/tailwind.css"
-import { fetchProducts } from "@/app/utils/api"
-import { CartContext } from "@/app/contexts/CartContext"
 
-const Products = () => {
+const CartPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState()
-  const [products, setProducts] = useState([])
-  const { addToCart } = useContext(CartContext)
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const productsData = await fetchProducts()
-      setProducts(productsData)
-    }
-    getProducts()
-  }, [])
+  const { cartItems, removeFromCart } = useContext(CartContext)
 
   const handleMenuToggle = () => {
     setIsDrawerOpen(!isDrawerOpen)
@@ -34,30 +24,30 @@ const Products = () => {
       <Appbar onMenuToggle={handleMenuToggle}></Appbar>
       <Drawer isOpen={isDrawerOpen} onClose={handleMenuToggle}></Drawer>
       Produtos
-      <h1>Produtos da Loja Virtual</h1>
-      {/* <ul>
-        {products.map((product) => (
-          <li key={product.id}>
+      <h1>Cart</h1>
+      <ul>
+        {cartItems.map((item) => (
+          <li key={item.id}>
             <img
-              src={product.image}
+              src={item.image}
               width={250}
               height={250}
               alt="Picture of the author"
             />
-            <p>{product.title}</p>
-            <p>{product.description} </p>
-            <p>{product.category} </p>
+            <p>{item.title}</p>
+            <p>{item.description} </p>
+            <p>{item.quantity} </p>
             <button
-              onClick={addToCart(product)}
+              onClick={removeFromCart(item.id)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
             >
-              Add cart
+              Remove From Cart
             </button>
           </li>
         ))}
-      </ul> */}
+      </ul>
       <Bottom></Bottom>
     </main>
   )
 }
-export default Products
+export default CartPage
