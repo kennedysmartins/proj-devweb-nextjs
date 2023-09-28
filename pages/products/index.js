@@ -37,7 +37,7 @@ const Products = () => {
       <h1>Produtos da Loja Virtual</h1>
       {/* <ul>
         {products.map((product) => (
-          <li key={product.id}>
+          <li key={product.id}></li>
             <img
               src={product.image}
               width={250}
